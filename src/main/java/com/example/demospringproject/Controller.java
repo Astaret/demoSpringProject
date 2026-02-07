@@ -12,10 +12,10 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/reservation")
 public class Controller {
-    private final ExampleService service;
+    private final ReservationService service;
     private static final Logger log = LoggerFactory.getLogger(Controller.class);
 
-    public Controller(ExampleService service) {
+    public Controller(ReservationService service) {
         this.service = service;
     }
 
@@ -66,7 +66,7 @@ public class Controller {
     ){
         log.info("Delete called with id = {}", id);
         try {
-            service.removeReservation(id);
+            service.cancelReservation(id);
             return ResponseEntity.ok().build();
         } catch (NoSuchElementException e){
             log.info(e.getMessage());
