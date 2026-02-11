@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long>
 {
-
     @Query("UPDATE ReservationEntity r set r.status = :status where r.id = :id")
     void setStatus(@Param("id") Long id, @Param("status") ReservationStatus reservationStatus);
 }
