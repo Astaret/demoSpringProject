@@ -24,13 +24,9 @@ public class Controller {
             @PathVariable("id") Long id
     ) {
         log.info("called getReservationById: id = " + id);
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    service.getReservationById(id)
-            );
-        } catch (NoSuchElementException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                service.getReservationById(id)
+        );
     }
 
     @GetMapping
@@ -65,13 +61,8 @@ public class Controller {
             @PathVariable("id") Long id
     ){
         log.info("Delete called with id = {}", id);
-        try {
-            service.cancelReservation(id);
-            return ResponseEntity.ok().build();
-        } catch (NoSuchElementException e){
-            log.info(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        service.cancelReservation(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/approve")

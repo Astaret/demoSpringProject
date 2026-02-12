@@ -32,8 +32,11 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservationToCreate) {
-        if (reservationToCreate.id() != null && reservationToCreate.status() != null) {
-            throw new IllegalArgumentException("Something gone wrong with data...");
+        if (reservationToCreate.id() != null) {
+            throw new IllegalArgumentException("Id should be empty dude...");
+        }
+        if (reservationToCreate.status() != null) {
+            throw new IllegalArgumentException("Status should be empty dude...");
         }
         var entityToSave = new ReservationEntity(
                 null,
