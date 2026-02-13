@@ -1,5 +1,6 @@
 package com.example.demospringproject;
 
+import com.example.demospringproject.database.ReservationEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +33,11 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservationToCreate) {
-        if (reservationToCreate.id() != null) {
-            throw new IllegalArgumentException("Id should be empty dude...");
+        if (!reservationToCreate.endDate().isAfter(reservationToCreate.startDate())) {
+            throw new IllegalArgumentException("Start date must be earlier than end date");
         }
         if (reservationToCreate.status() != null) {
-            throw new IllegalArgumentException("Status should be empty dude...");
+            throw new IllegalArgumentException("Status should be empty");
         }
         var entityToSave = new ReservationEntity(
                 null,
@@ -59,6 +60,9 @@ public class ReservationService {
         if (reservationEntity.getStatus() != ReservationStatus.PENDING) {
             throw new IllegalStateException("Cannot modify reservation " + reservationEntity.getStatus());
         }
+        if (!reservationToUpdate.endDate().isAfter(reservationToUpdate.startDate())) {
+            throw new IllegalArgumentException("Start date must be earlier than end date");
+        }
 
         var reservationToSave = new ReservationEntity(
                 reservationEntity.getId(),
@@ -77,6 +81,14 @@ public class ReservationService {
     public void cancelReservation(Long id) {
         if (!repository.existsById(id)) {
             throw new NoSuchElementException("Not found id " + id);
+        }
+        var reservation = repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Not found reservation" + id));
+        if (reservation.getStatus().equals(ReservationStatus.APPROVED)) {
+            throw new IllegalStateException("Cannot cancel approved reservation. Contact with manager");
+        }
+        if (reservation.getStatus().equals(ReservationStatus.CANCELLED)) {
+            throw new IllegalArgumentException("Cannot cancel already cancelled reservation.");
         }
         repository.setStatus(id, ReservationStatus.CANCELLED);
     }

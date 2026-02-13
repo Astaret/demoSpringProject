@@ -1,5 +1,6 @@
-package com.example.demospringproject;
+package com.example.demospringproject.database;
 
+import com.example.demospringproject.ReservationStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
