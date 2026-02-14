@@ -11,6 +11,7 @@ public class HibernateConfiguration {
         Configuration configuration = new Configuration();
 
         configuration.addPackage("com.example.demospringproject")
+                .addAnnotatedClass(ReservationEntity.class)
                 .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
                 .setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres")
                 .setProperty("hibernate.connection.username", "postgres")

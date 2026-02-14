@@ -2,6 +2,9 @@ package com.example.demospringproject;
 
 import com.example.demospringproject.database.ReservationEntity;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +14,11 @@ import java.util.NoSuchElementException;
 public class ReservationService {
 
     private final ReservationRepository repository;
+
+    AnnotationConfigApplicationContext context =
+            new AnnotationConfigApplicationContext("com.example.demospringproject");
+    SessionFactory factory = context.getBean(SessionFactory.class);
+    private final Session session = factory.openSession();
 
     public ReservationService(ReservationRepository repository) {
         this.repository = repository;
