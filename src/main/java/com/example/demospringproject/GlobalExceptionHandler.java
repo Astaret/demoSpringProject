@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleGenericException(
             Exception e
     ) {
-        log.error("Got message ", e);
+        log.error("Got message for u", e);
 
         var errorDto = new ErrorResponseDto(
                 "Internal server error",
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleEntityNotFound(
             EntityNotFoundException e
     ) {
-        log.error("Got message, handle entityNotFound ", e);
+        log.error("Got message, handle entityNotFound for u", e);
 
         var errorDto = new ErrorResponseDto(
                 "Entity not found",
